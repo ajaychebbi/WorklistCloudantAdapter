@@ -110,7 +110,6 @@ public class WorklistResource {
 		catch(NoDocumentException e){
 			return Response.status(404).build();
 		}
-
 	}
 
 	@GET
@@ -121,6 +120,7 @@ public class WorklistResource {
 		//return Response.ok(entries).build();
 		return entries;
 	}
+
 	@GET
 	@Path("/{id}")
 	@Produces("application/json")
@@ -130,4 +130,15 @@ public class WorklistResource {
 		
 		return user;
 	}
+
+	@GET
+	@Path("/openEntries")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getOpenEntries() throws Exception {
+		System.out.println("in GET");
+		List<Workitem> entries = getDB().view("_all_docs").includeDocs(true).query(Workitem.class);
+		//return Response.ok(entries).build();
+		return String.valueOf(entries.size());
+	}
+
 }
