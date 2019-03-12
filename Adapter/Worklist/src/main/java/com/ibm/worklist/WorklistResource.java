@@ -39,7 +39,7 @@ import com.cloudant.client.api.Database;
 
 
 @Path("/workitems")
- @OAuthSecurity(enabled = false)
+@OAuthSecurity(enabled = true)
 public class WorklistResource {
 	/*
 	 * For more info on JAX-RS see https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
@@ -98,7 +98,7 @@ public class WorklistResource {
 	@DELETE
 	@Path("/{id}")
 	
-	@OAuthSecurity(scope = "Username_Password")
+	//@OAuthSecurity(scope = "Username_Password")
 	public Response deleteEntry(@PathParam("id") String id) throws Exception {
 		try{
 			Workitem user = getDB().find(Workitem.class, id);
@@ -134,6 +134,7 @@ public class WorklistResource {
 	@GET
 	@Path("/openEntries")
 	@Produces(MediaType.TEXT_PLAIN)
+	@OAuthSecurity(enabled = false)
 	public String getOpenEntries() throws Exception {
 		System.out.println("in GET");
 		List<Workitem> entries = getDB().view("_all_docs").includeDocs(true).query(Workitem.class);
